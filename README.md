@@ -1,6 +1,3 @@
-Here's the reworded README, written from Alyssia's point of view — copy/paste ready:
-
-```
 # Alyssia Gaston — Portfolio
 
 This is my single-page portfolio site, featuring my work in software engineering, game development, robotics, and app development, along with my experience, projects, skills, and social links.
@@ -24,4 +21,3 @@ You can also connect this GitHub repo to Netlify and deploy from the `main` bran
 * Edit `index.html` for static page content and section labels.
 * Edit `style.css` for colors, spacing, layout, and responsive design.
 * Game Mode toggle is top-left; it reskins the site and opens a small canvas mini game.
-```

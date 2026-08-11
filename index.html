@@ -2,23 +2,41 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Alyssia Gaston — Software, AI & Systems Builder</title>
-<meta name="description" content="Alyssia Gaston — Computer Science student building software, AI, and human-centered systems." />
-<meta name="theme-color" content="#0a1622" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- mobile essentials, dont touch -->
+<title>Alyssia Gaston — Software, AI & Systems Builder</title><!-- tab title + google result title -->
+<meta name="description" content="Alyssia Gaston — Computer Science student building software, AI, and human-centered systems." /><!-- the lil blurb under search results -->
+<meta name="theme-color" content="#0a1622" /><!-- tints phone status bar, cuteee detail -->
+<!-- favicon is just an inline svg, no sep. image file to manage -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230a1622'/%3E%3Ctext x='50' y='64' font-family='monospace' font-size='42' font-weight='700' fill='%235eead4' text-anchor='middle'%3EAG%3C/text%3E%3C/svg%3E" />
+
+<!-- link preview stuff so it doesnt look busted when shared lol -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://alyssia-gaston.netlify.app/" />
+<meta property="og:title" content="Alyssia Gaston — Software, AI & Systems Builder" />
+<meta property="og:description" content="Computer Science student building software, AI, and human-centered systems — from web apps to embedded hardware." />
+<meta property="og:image" content="https://alyssia-gaston.netlify.app/assets/thumbnail-og.png" /><!-- teal/navy branded preview img -->
+<meta property="og:image:width" content="1200" /><!-- og standard is 1200x630, dont mess w it -->
+<meta property="og:image:height" content="630" />
+
+<!-- twitter needs its own copy of same tags, annoying but yeahhh -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Alyssia Gaston — Software, AI & Systems Builder" />
+<meta name="twitter:description" content="Computer Science student building software, AI, and human-centered systems — from web apps to embedded hardware." />
+<meta name="twitter:image" content="https://alyssia-gaston.netlify.app/assets/thumbnail-og.png" />
+
+<!-- fonts: space grotesk = body text, jetbrains mono = code-y bits, press start 2p = game mode pixels -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Press+Start+2P&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="style.css" /><!-- the big one -->
 </head>
 <body>
 
-<!-- NAVBAR -->
+<!-- navbar. logo, links, socials, hamburger. stays stuck up top -->
 <header class="navbar">
   <div class="nav-inner">
-    <a href="#home" class="logo">Alyssia <span>Gaston</span></a>
-    <nav class="nav-links">
+    <a href="#home" class="logo">Alyssia <span>Gaston</span></a><!-- span = teal accent on "Gaston" -->
+    <nav class="nav-links"><!-- data-route is what js router listens for, keep synced -->
       <a href="#home" data-route="home">Home</a>
       <a href="#about" data-route="about">About</a>
       <a href="#experience" data-route="experience">Experience</a>
@@ -26,16 +44,17 @@
       <a href="#hardware" data-route="hardware">Hardware</a>
       <a href="#art" data-route="art">Creator</a>
     </nav>
-    <div class="nav-icons">
-      <a href="mailto:aggaston@email.sc.edu" title="Email" aria-label="Email"><svg viewBox="0 0 24 24"><path d="M2 5.5C2 4.67 2.67 4 3.5 4h17c.83 0 1.5.67 1.5 1.5v13c0 .83-.67 1.5-1.5 1.5h-17C2.67 20 2 19.33 2 18.5v-13Zm2.2.5 7.8 6.2L19.8 6H4.2ZM4 8.3V18h16V8.3l-8 6.4-8-6.4Z"/></svg></a>
-      <a href="https://github.com/alyssig" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.37-3.37-1.37-.46-1.19-1.11-1.51-1.11-1.51-.91-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.73 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.42.2 2.47.1 2.73.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.48-.01 2.82 0 .27.18.6.69.49A10.26 10.26 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg></a>
+    <div class="nav-icons"><!-- raw svgs, no icon library -->
+      <a href="mailto:aggaston@email.sc.edu" title="Email" aria-label="Email"><svg viewBox="0 0 24 24"><path d="M2 5.5C2 4.67 2.67 4 3.5 4h17c.83 0 1.5.67 1.5 1.5v13c0 .83-.67 1.5-1.5 1.5h-17C2.67 20 2 19.33 2 18.5v-13Zm2.2.5 7.8 6.2L19.8 6H4.2ZM4 8.3V18h16V8.3l-8 6.4-8-6.4Z"/></svg></a><!-- envelope -->
+      <a href="https://github.com/alyssig" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.37-3.37-1.37-.46-1.19-1.11-1.51-1.11-1.51-.91-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.73 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.42.2 2.47.1 2.73.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.48-.01 2.82 0 .27.18.6.69.49A10.26 10.26 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg></a><!-- octocat, iconic -->
       <a href="https://www.linkedin.com/in/alyssia-gaston-857138375/" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M6.94 5a2 2 0 1 1-4-.02 2 2 0 0 1 4 .02ZM7 8.48H3V21h4V8.48Zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-3.96 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.68-2.91V8.48Z"/></svg></a>
-      <a href="https://www.instagram.com/mochabytee/" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2c2.72 0 3.06.01 4.12.06 1.06.05 1.79.22 2.43.47a4.9 4.9 0 0 1 1.77 1.15 4.9 4.9 0 0 1 1.15 1.77c.25.64.42 1.37.47 2.43.05 1.06.06 1.4.06 4.12s-.01 3.06-.06 4.12c-.05 1.06-.22 1.79-.47 2.43a4.9 4.9 0 0 1-1.15 1.77 4.9 4.9 0 0 1-1.77 1.15c-.64.25-1.37.42-2.43.47-1.06.05-1.4.06-4.12.06s-3.06-.01-4.12-.06c-1.06-.05-1.79-.22-2.43-.47a4.9 4.9 0 0 1-1.77-1.15 4.9 4.9 0 0 1-1.15-1.77c-.25-.64-.42-1.37-.47-2.43C2.01 15.06 2 14.72 2 12s.01-3.06.06-4.12c.05-1.06.22-1.79.47-2.43a4.9 4.9 0 0 1 1.15-1.77A4.9 4.9 0 0 1 5.45.53C6.09.28 6.82.11 7.88.06 8.94.01 9.28 0 12 0Zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4Zm5.2-8.4a1.17 1.17 0 1 0 0-2.34 1.17 1.17 0 0 0 0 2.34Z" transform="translate(0 2)"/></svg></a>
+      <a href="https://www.instagram.com/mochabytee/" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2c2.72 0 3.06.01 4.12.06 1.06.05 1.79.22 2.43.47a4.9 4.9 0 0 1 1.77 1.15 4.9 4.9 0 0 1 1.15 1.77c.25.64.42 1.37.47 2.43.05 1.06.06 1.4.06 4.12s-.01 3.06-.06 4.12c-.05 1.06-.22 1.79-.47 2.43a4.9 4.9 0 0 1-1.15 1.77 4.9 4.9 0 0 1-1.77 1.15c-.64.25-1.37.42-2.43.47-1.06.05-1.4.06-4.12.06s-3.06-.01-4.12-.06c-1.06-.05-1.79-.22-2.43-.47a4.9 4.9 0 0 1-1.77-1.15 4.9 4.9 0 0 1-1.15-1.77c-.25-.64-.42-1.37-.47-2.43C2.01 15.06 2 14.72 2 12s.01-3.06.06-4.12c.05-1.06.22-1.79.47-2.43a4.9 4.9 0 0 1 1.15-1.77A4.9 4.9 0 0 1 5.45.53C6.09.28 6.82.11 7.88.06 8.94.01 9.28 0 12 0Zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4Zm5.2-8.4a1.17 1.17 0 1 0 0-2.34 1.17 1.17 0 0 0 0 2.34Z" transform="translate(0 2)"/></svg></a><!-- @mochabytee -->
     </div>
-    <button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button><!-- 3 bars -> X on open, mobile only -->
   </div>
 </header>
 
+<!-- funky pill flips whole site into arcade mode. sacred, do NOT remove -->
 <div class="game-mode-toggle-wrap">
   <button id="gameModeBtn" class="pill-toggle">
     <span class="dot"></span> GAME MODE
@@ -44,27 +63,27 @@
 
 <main>
 
-  <!-- HOME -->
-  <section id="home" class="page active">
+  <!-- home / hero. canvas confetti-particle bg + intro line, keep it snappy -->
+  <section id="home" class="page active"><!-- .active = whats showing on load -->
     <div class="hero">
       <div class="hero-art">
-        <canvas id="particleCanvas"></canvas>
+        <canvas id="particleCanvas"></canvas><!-- js draws particles here -->
       </div>
       <div class="hero-text">
-        <h1>hi, <span class="accent">alyssia</span> here.<span class="cursor">|</span></h1>
+        <h1>hi, <span class="accent">alyssia</span> here.<span class="cursor">|</span></h1><!-- fake blinking cursor, purely for vibes -->
         <p class="lede">Computer science student and systems builder in South Carolina. I build software, AI concepts, and robotics prototypes by day, and document the whole journey as <strong>@mochabytee</strong> for 20K+ followers by night.</p>
-        <div class="hero-buttons">
+        <div class="hero-buttons"><!-- 1 real cta, 1 scroll link -->
           <a href="mailto:aggaston@email.sc.edu" class="btn btn-primary">
             <svg viewBox="0 0 24 24"><path d="M2 5.5C2 4.67 2.67 4 3.5 4h17c.83 0 1.5.67 1.5 1.5v13c0 .83-.67 1.5-1.5 1.5h-17C2.67 20 2 19.33 2 18.5v-13Zm2.2.5 7.8 6.2L19.8 6H4.2ZM4 8.3V18h16V8.3l-8 6.4-8-6.4Z"/></svg>
             Say hi!
           </a>
-          <a href="#software" class="btn btn-ghost">View projects →</a>
+          <a href="#software" class="btn btn-ghost">View projects →</a><!-- ghost = outline style -->
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ABOUT -->
+  <!-- about me. big bio + skills grid + photo, all static -->
   <section id="about" class="page">
     <div class="section-header">
       <h2>/ about me</h2>
@@ -76,7 +95,7 @@
         <p>I am driven to architect software that feels atmospheric, highly responsive, and memorable, backed by robust underlying technical architecture. My experience spans building low-latency conversational AI assistants, branching logic frameworks, player-choice systems, and autonomous robotic kinematics. By combining foundational systems programming with consumer-focused UI/UX design, I develop polished, cross-platform experiences optimized for web, mobile, and gaming ecosystems.</p>
         <p>I am actively tracking software engineering, gameplay programming, and generative AI internship opportunities within fast-paced consumer tech, entertainment, and interactive media platforms. My goal is to build the next generation of social, creative, and immersive technologies that connect and empower millions of users worldwide.</p>
         <p>Here are some technologies I've been working with:</p>
-        <div class="skills-grid">
+        <div class="skills-grid"><!-- just add div for new stack items, no js needed -->
           <div><span class="arrow">▸</span> Python</div>
           <div><span class="arrow">▸</span> JavaScript</div>
           <div><span class="arrow">▸</span> Java</div>
@@ -86,28 +105,28 @@
         </div>
       </div>
       <div class="about-photo">
-        <img src="assets/portrait-about.jpg" alt="Alyssia Gaston" class="about-img" />
+        <img src="assets/portrait-about.jpg" alt="Alyssia Gaston" class="about-img" /><!-- central park pic of lil ol me!! -->
       </div>
     </div>
   </section>
 
-  <!-- EXPERIENCE -->
+  <!-- experience tabs. buttons are static, actual text lives in script.js gets injected on click -->
   <section id="experience" class="page">
     <div class="section-header">
       <h2>/ experience</h2>
       <div class="rule"></div>
     </div>
     <div class="experience-layout">
-      <div class="exp-tabs" id="expTabs">
+      <div class="exp-tabs" id="expTabs"><!-- data-exp = index into the experience array, keep order matching -->
         <button class="exp-tab active" data-exp="0">AccessComputing</button>
         <button class="exp-tab" data-exp="1">Conference Assistant</button>
         <button class="exp-tab" data-exp="2">NASA Space Grant</button>
       </div>
-      <div class="exp-panel" id="expPanel"></div>
+      <div class="exp-panel" id="expPanel"></div><!-- gets filled on load -->
     </div>
   </section>
 
-  <!-- SOFTWARE / PROJECTS -->
+  <!-- projects. carousel up top, full grid below, both fed by same array in script.js -->
   <section id="software" class="page">
     <div class="section-header">
       <h2>/ projects</h2>
@@ -115,33 +134,33 @@
       <a href="https://github.com/alyssig" target="_blank" rel="noopener" class="view-all">View all projects →</a>
     </div>
 
-    <div class="carousel" id="carousel">
+    <div class="carousel" id="carousel"><!-- arrows fire prev/next in js -->
       <button class="carousel-arrow left" id="carouselPrev" aria-label="Previous">‹</button>
-      <div class="carousel-track" id="carouselTrack"></div>
+      <div class="carousel-track" id="carouselTrack"></div><!-- cards go here -->
       <button class="carousel-arrow right" id="carouselNext" aria-label="Next">›</button>
     </div>
-    <div class="carousel-dots" id="carouselDots"></div>
+    <div class="carousel-dots" id="carouselDots"></div><!-- 1 dot per project -->
 
-    <div class="project-grid" id="projectGrid"></div>
+    <div class="project-grid" id="projectGrid"></div><!-- same data, grid layout -->
   </section>
 
-  <!-- HARDWARE -->
+  <!-- hardware, aka robot stuff. js-rendered from hardware array so stays empty here -->
   <section id="hardware" class="page">
     <div class="section-header">
       <h2>/ hardware</h2>
       <div class="rule"></div>
     </div>
-    <div class="hardware-grid" id="hardwareGrid"></div>
+    <div class="hardware-grid" id="hardwareGrid"></div><!-- shirostarr, aura, drill etc render here -->
   </section>
 
-  <!-- ART / CREATOR -->
+  <!-- creator/content, aka mochabytee plug -->
   <section id="art" class="page">
     <div class="section-header">
       <h2>/ creator</h2>
       <div class="rule"></div>
     </div>
     <div class="creator-wrap">
-      <div class="creator-stat-card">
+      <div class="creator-stat-card"><!-- update 20K+ by hand as it grows, no api hookup -->
         <div class="creator-stat">20K+</div>
         <div class="creator-stat-label">followers across platforms</div>
         <p>As <strong class="accent-text">@mochabytee</strong>, I publicly document computer science, project builds, game development, and college life — technical storytelling for people who want to see the messy middle, not just the finished product.</p>
@@ -149,7 +168,7 @@
           <a href="https://www.instagram.com/mochabytee/" target="_blank" rel="noopener" class="btn btn-ghost">Instagram ↗</a>
         </div>
       </div>
-      <div class="creator-pillars">
+      <div class="creator-pillars"><!-- just vibes-y bullet list -->
         <div class="pillar"><span class="arrow">▸</span> Computer science &amp; project build-alongs</div>
         <div class="pillar"><span class="arrow">▸</span> Game development devlogs</div>
         <div class="pillar"><span class="arrow">▸</span> College &amp; STEM life</div>
@@ -162,26 +181,29 @@
 </main>
 
 <footer class="site-footer">
-  <p>Built by Alyssia Gaston · <span id="year"></span></p>
+  <p>Built by Alyssia Gaston · <span id="year"></span></p><!-- year auto-updates via script.js, never stale -->
 </footer>
 
-<!-- GAME MODE: boss-rush arcade -->
+<!-- GAME MODE starts here. boss-rush mini platformer, hidden til pill up top gets clicked.
+     4 bosses based on my own projects + shards pop random facts about me. all logic lives
+     in script.js, is just empty shell for it -->
 <div id="arcadeOverlay" class="arcade-overlay hidden">
   <div class="arcade-frame">
-    <div class="arcade-hud">
-      <div class="arcade-lives" id="arcadeLives"></div>
+    <div class="arcade-hud"><!-- lives, boss count, shard count, mute, close -->
+      <div class="arcade-lives" id="arcadeLives"></div><!-- heart icons, js decides how many -->
       <div class="arcade-title">PORTFOLIO QUEST</div>
       <div class="arcade-hud-right">
-        <div class="arcade-bosscount" id="arcadeBossCount">bosses: 0/4</div>
+        <div class="arcade-bosscount" id="arcadeBossCount">bosses: 0/4</div><!-- placeholder, js overwrites -->
         <div class="arcade-shardcount" id="arcadeShardCount">shards: 0/8</div>
-        <button class="arcade-sound" id="arcadeSound" aria-label="Mute sound">🔊</button>
-        <button class="arcade-close" id="arcadeClose" aria-label="Close game">✕</button>
+        <button class="arcade-sound" id="arcadeSound" aria-label="Mute sound">🔊</button><!-- toggles muted state -->
+        <button class="arcade-close" id="arcadeClose" aria-label="Close game">✕</button><!-- bail back to normal site -->
       </div>
     </div>
     <div class="arcade-canvas-wrap">
-      <canvas id="arcadeCanvas" width="800" height="400"></canvas>
+      <canvas id="arcadeCanvas" width="800" height="400"></canvas><!-- blank til js starts drawing -->
       <div class="arcade-toast hidden" id="arcadeToast"></div>
 
+      <!-- start screen, shows controls so ppl dont just flail -->
       <div class="arcade-screen" id="arcadeStartScreen">
         <div class="arcade-screen-title">PORTFOLIO QUEST</div>
         <p>run, jump, and stomp your way through four bosses built from my own projects — and collect glowing memory shards along the way for facts about me.</p>
@@ -191,6 +213,7 @@
         <button class="btn btn-primary" id="arcadeStartBtn">Start</button>
       </div>
 
+      <!-- win screen -->
       <div class="arcade-screen hidden" id="arcadeWinScreen">
         <div class="arcade-screen-title">you win! 🎉</div>
         <p id="arcadeWinMsg">all four bosses defeated — thanks for playing through my portfolio.</p>
@@ -198,6 +221,7 @@
         <button class="btn btn-ghost" id="arcadeDoneBtn">Close</button>
       </div>
 
+      <!-- rip, game over screen -->
       <div class="arcade-screen hidden" id="arcadeOverScreen">
         <div class="arcade-screen-title">game over</div>
         <p id="arcadeOverMsg">the bosses got you this time.</p>
@@ -205,6 +229,7 @@
         <button class="btn btn-ghost" id="arcadeQuitBtn">Close</button>
       </div>
     </div>
+    <!-- touch d-pad for mobile, desktop just uses keys -->
     <div class="arcade-touch" id="arcadeTouch">
       <button class="arcade-btn" id="btnLeft" aria-label="Left">◀</button>
       <button class="arcade-btn" id="btnJump" aria-label="Jump">▲</button>
@@ -213,6 +238,7 @@
   </div>
 </div>
 
+<!-- everything above is shell, script.js does real work -->
 <script src="script.js"></script>
 </body>
 </html>

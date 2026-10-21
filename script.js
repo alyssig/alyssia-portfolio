@@ -1,6 +1,22 @@
 // ---------- DATA ----------
 const experiences = [
   {
+    "title": "Digital Collections AI & Data Quality Assistant",
+    "org": "University of South Carolina",
+    "dates": "SEP 2026 – PRESENT",
+    "bullets": [
+      "Evaluate AI-generated transcriptions for accuracy, consistency, and reliability through systematic quality checks and sampling.",
+      "Identify and correct transcription errors, formatting issues, and data inconsistencies before repository ingestion.",
+      "Structure unstructured source materials into machine-readable, searchable datasets for institutional digital collections.",
+      "Execute data processing and validation workflows across JSTOR Seeklight, Zooniverse, and institutional repository systems."
+    ],
+    "tags": [
+      "AI Output Evaluation",
+      "Data Quality",
+      "Digital Collections"
+    ]
+  },
+  {
     title: "Research Intern",
     org: "AccessComputing — University of Washington",
     dates: "MAY 2025 – AUG 2025",
@@ -46,7 +62,7 @@ const projects = [
   {
     category: "Campus Technology",
     name: "Campus Connect",
-    desc: "Community platform built for college students to explore campus life interactively, with reviews, recommendations, and student-generated content. Public signup is live; full launch Aug 18, 2026.",
+    desc: "A campus community platform prototype designed to help college students explore campus life through reviews, recommendations, and student-generated content.",
     tech: "HTML · CSS · JavaScript · UX · Accessibility",
     link: "https://campusconnect-uofsc.netlify.app"
   },
@@ -55,13 +71,6 @@ const projects = [
     name: "A.U.R.A.",
     desc: "Autonomous Utility & Relief Assistant — a quadruped robotic platform for search-and-rescue in disaster environments, built for hazardous terrain and emergency supply delivery.",
     tech: "Robotics · Embedded Systems · CAD · Webots · C",
-    link: null
-  },
-  {
-    category: "Embedded Systems",
-    name: "ShiroStarr",
-    desc: "A portable, interactive digital companion inspired by virtual pet systems, focused on embedded software and human-device interaction. Integrates a microcontroller, display, and physical sensors so the device responds to user interactions and environmental changes through animated behaviors and evolving internal states — with persistent memory, customizable personality traits, and wireless communication between devices.",
-    tech: "Embedded Programming · Event-Driven Systems · Hardware-Software Integration · Data Persistence",
     link: null
   },
   {
@@ -90,19 +99,6 @@ const hardware = [
     desc: "Built during a NASA SC Space Grant Consortium internship at Clemson University. Designed and constructed a drilling prototype for lunar regolith extraction, modeled and validated using SolidWorks, EDEM, and ADAMS.",
     tech: "SolidWorks, EDEM, ADAMS"
   },
-  {
-    icon: "⭐",
-    image: null,
-    images: ["assets/shirostarr-technical-main.jpg", "assets/shirostarr-technical-alt.jpg", "assets/shirostarr-xray-ref.jpg"],
-    imageNotes: [
-      "CAD concept design",
-      "CAD concept — alternate angle",
-      "concept reference — not an actual build photo"
-    ],
-    name: "ShiroStarr — Embedded Virtual Companion System",
-    desc: "Developing a portable, interactive digital companion inspired by virtual pet systems, with a focus on embedded software and human-device interaction. The project will integrate a microcontroller, display, physical sensors, and custom software to allow the device to respond to user interactions and environmental changes through animated behaviors and evolving internal states. Planned features include persistent memory, sensor-driven responses, customizable personality traits, and wireless communication between devices.",
-    tech: "Embedded Programming, Event-Driven Systems, Hardware-Software Integration, Data Persistence"
-  }
 ];
 
 // ---------- ROUTING ----------
@@ -127,14 +123,46 @@ document.getElementById("hamburger").addEventListener("click", () => {
 // year
 document.getElementById("year").textContent = new Date().getFullYear();
 
+// ---------- INTERNSHIP AVAILABILITY ----------
+const heroText = document.querySelector("#home .hero-text");
+if (heroText && !document.getElementById("careerAvailability")) {
+  const availability = document.createElement("p");
+  availability.id = "careerAvailability";
+  availability.textContent = "Graduating Spring 2028 · Available for Summer 2027 SWE internships";
+  availability.style.cssText = "color:var(--accent,#5eead4);font-weight:600;line-height:1.6;margin:1rem 0;";
+  heroText.insertBefore(availability, heroText.querySelector(".hero-buttons"));
+}
+
+// ---------- RESUME ----------
+const heroButtons = document.querySelector("#home .hero-buttons");
+if (heroButtons && !document.getElementById("resumeLink")) {
+  const resumeLink = document.createElement("a");
+  resumeLink.id = "resumeLink";
+  resumeLink.className = "btn btn-ghost";
+  resumeLink.href = "assets/Alyssia_Gaston_Resume.pdf";
+  resumeLink.target = "_blank";
+  resumeLink.rel = "noopener";
+  resumeLink.textContent = "Résumé ↗";
+  resumeLink.setAttribute("aria-label", "Open Alyssia Gaston's résumé (PDF, new tab)");
+  heroButtons.appendChild(resumeLink);
+  heroButtons.style.flexWrap = "wrap";
+}
+
 // ---------- EXPERIENCE ----------
 const expTabsWrap = document.getElementById("expTabs");
 const expPanel = document.getElementById("expPanel");
 
+// Keep each experience button aligned with its entry in the data array.
+const experienceLabels = ["Digital Collections AI", "AccessComputing", "Conference Assistant", "NASA Space Grant"];
+expTabsWrap.innerHTML = experiences.map((experience, i) =>
+  `<button type="button" class="exp-tab${i === 0 ? " active" : ""}" data-exp="${i}">${experienceLabels[i] || experience.title}</button>`
+).join("");
+
+
 function renderExp(i) {
   const e = experiences[i];
   expPanel.innerHTML = `
-    <h3>${e.title} @ <span>${e.org.split("—")[1] ? e.org.split("—")[1].trim() : e.org}</span></h3>
+    <h3>${e.title} @ <span>${e.org}</span></h3>
     <div class="exp-dates">${e.dates}</div>
     <ul>${e.bullets.map(b => `<li><span class="arrow">▸</span><span>${b}</span></li>`).join("")}</ul>
     <div class="exp-tags">${e.tags.map(t => `<span>${t}</span>`).join("")}</div>
@@ -427,63 +455,79 @@ window.addEventListener("resize", resizeCanvas);
 resizeCanvas();
 requestAnimationFrame(animateParticles);
 
-// ---------- GAME MODE: "Portfolio Quest" boss-rush arcade ----------
+// ---------- GAME MODE: PORTFOLIO QUEST ----------
 const gameModeBtn = document.getElementById("gameModeBtn");
 const arcadeOverlay = document.getElementById("arcadeOverlay");
-const arcadeClose = document.getElementById("arcadeClose");
 const arcadeCanvas = document.getElementById("arcadeCanvas");
 const actx = arcadeCanvas.getContext("2d");
-const arcadeLivesEl = document.getElementById("arcadeLives");
-const arcadeBossCountEl = document.getElementById("arcadeBossCount");
-const arcadeShardCountEl = document.getElementById("arcadeShardCount");
 const arcadeSoundBtn = document.getElementById("arcadeSound");
-const arcadeToast = document.getElementById("arcadeToast");
 const startScreen = document.getElementById("arcadeStartScreen");
 const winScreen = document.getElementById("arcadeWinScreen");
 const overScreen = document.getElementById("arcadeOverScreen");
-const overMsg = document.getElementById("arcadeOverMsg");
-const winMsgEl = document.getElementById("arcadeWinMsg");
-
+const arcadeToast = document.getElementById("arcadeToast");
 const CW = arcadeCanvas.width, CH = arcadeCanvas.height;
-const GROUND_Y = 340;
-const LEVEL_WIDTH = 3400;
-const GRAVITY = 0.55;
-const JUMP_V = -11.5;
-const MOVE_SPEED = 4;
-
+const GROUND_Y = 340, LEVEL_WIDTH = 2900;
+const GRAVITY = 0.55, JUMP_V = -11.5, MOVE_SPEED = 4;
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const BOSS_DEFS = [
-  { name: "AURA-BOT", sprite: "AURA", baseX: 750, range: 90, speed: 1.6, hp: 3, size: 46,
-    fact: "AURA-BOT defeated! The real quadruped robot lives on the Hardware page." },
-  { name: "DRILL KING", sprite: "DRILL", baseX: 1550, range: 110, speed: 2.0, hp: 3, size: 46,
-    fact: "Drill King defeated! Check out the Lunar Regolith Drilling Prototype under Hardware." },
-  { name: "REBUTTAL AI", sprite: "REBUTTAL", baseX: 2350, range: 100, speed: 2.3, hp: 4, size: 48,
-    fact: "Rebuttal.ai defeated! See it live from the Projects page." },
-  { name: "SHIROSTARR", sprite: "SHIRO", baseX: 3050, range: 120, speed: 2.6, hp: 5, size: 54,
-    fact: "ShiroStarr defeated! You beat the final boss — thanks for playing." }
+  { name: "AURA-BOT", sprite: "AURA", x: 750, hp: 3, size: 46, attack: "charge", color: "#5eead4", hint: "AURA is charging — jump over it!", title: "A.U.R.A. — Search-and-rescue robotics", detail: hardware[0].desc, link: "#hardware" },
+  { name: "DRILL KING", sprite: "DRILL", x: 1550, hp: 3, size: 46, attack: "wave", color: "#38bdf8", hint: "Ground waves incoming — jump!", title: "Lunar Regolith Drilling Prototype", detail: hardware[1].desc, link: "#hardware" },
+  { name: "REBUTTAL AI", sprite: "REBUTTAL", x: 2450, hp: 4, size: 48, attack: "bubble", color: "#c4b5fd", hint: "Speech bubbles incoming — dodge and stomp!", title: "Rebuttal.ai — Communication assistance", detail: projects[0].desc, link: "#software" }
 ];
-
-// ---------- FACT SHARDS: portfolio trivia scattered through the level ----------
 const FACT_PICKUPS = [
-  { x: 220, h: 22, fact: "I'm a Computer Science student building software, AI, and human-centered systems." },
-  { x: 430, h: 90, fact: "I spent a summer at the University of Washington's AccessComputing program researching accessibility & tech equity." },
-  { x: 1000, h: 22, fact: "Rebuttal.ai is an AI earpiece coach I built for interviews, debates, negotiation, and public speaking." },
-  { x: 1250, h: 90, fact: "Campus Connect, my community platform for college students, fully launches August 18, 2026." },
-  { x: 1850, h: 22, fact: "A.U.R.A. is a quadruped robot I designed for search-and-rescue in disaster environments." },
-  { x: 2050, h: 90, fact: "I designed a lunar regolith drilling prototype during a NASA SC Space Grant internship at Clemson." },
-  { x: 2650, h: 22, fact: "ShiroStarr is a tamagotchi-style companion I'm building — shaped like a star." },
-  { x: 2850, h: 90, fact: "As @mochabytee I've grown a 20K+ follower community documenting my CS projects and college life." }
+  { x: 220, h: 24, fact: "I'm graduating in Spring 2028 and available for Summer 2027 SWE internships!" },
+  { x: 440, h: 86, fact: "At USC, I evaluate AI-generated transcriptions and support digital collections data quality." },
+  { x: 1030, h: 24, fact: "At UW's AccessComputing program, I researched accessibility and tech equity." },
+  { x: 1250, h: 86, fact: "Campus Connect is my campus community platform prototype for college students." },
+  { x: 1840, h: 24, fact: "I built a lunar regolith drilling prototype during my NASA SC Space Grant internship." },
+  { x: 2030, h: 86, fact: "A.U.R.A. brings together CAD, Webots simulation, C, and embedded systems." },
+  { x: 2210, h: 24, fact: "As @mochabytee, I share my CS projects and college life with 20K+ followers." }
 ];
 
-let bgStars = [];
-(function seedStars() {
-  let seed = 99;
-  function rand() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
-  for (let i = 0; i < 140; i++) {
-    bgStars.push({ x: rand() * LEVEL_WIDTH, y: rand() * (GROUND_Y - 20), r: rand() * 1.6 + 0.4 });
-  }
-})();
+// New screens and styling are added here so the existing HTML still works.
+const gameStyle = document.createElement("style");
+gameStyle.textContent = `
+  #arcadeOverlay .arcade-screen { overflow-y:auto; box-sizing:border-box; padding:20px; justify-content:flex-start; }
+  @media(max-width:600px) { #arcadeOverlay .arcade-canvas-wrap.quest-menu { min-height:min(440px,60dvh); } }
+  #arcadeOverlay .arcade-screen p { max-width:580px; margin:12px auto; line-height:1.5; }
+  #questReveal { background:rgba(8,19,29,.96); z-index:5; }
+  #questReveal h2 { color:#5eead4; margin:8px 0; font-size:clamp(18px,3vw,26px); }
+  .quest-actions { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+  #questPause { background:transparent; border:1px solid #64748b; border-radius:6px; color:#e2e8f0; padding:5px 8px; cursor:pointer; }
+  #questConfetti { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:6; }
+  #arcadeOverlay button:focus-visible, #arcadeOverlay a:focus-visible { outline:2px solid #5eead4; outline-offset:3px; }
+  #arcadeTouch button { touch-action:none; }
+`;
+document.head.appendChild(gameStyle);
+startScreen.querySelector("p").textContent = "Explore three project bosses: dodge AURA's charge, jump Drill King's waves, and avoid Rebuttal.ai's speech bubbles. Stomp from above to win. Each victory reveals the project behind the boss.";
+startScreen.querySelector(".arcade-controls-hint").textContent = "← → / A D: move · Space / ↑ / W: jump · P: pause · Esc: close. Touch controls are below. Collect all 7 optional memory shards!";
+arcadeCanvas.setAttribute("aria-label", "Portfolio Quest: move, jump, and stomp three project bosses. All portfolio projects are also accessible outside the game.");
+arcadeOverlay.setAttribute("role", "dialog");
+arcadeOverlay.setAttribute("aria-modal", "true");
+arcadeOverlay.setAttribute("aria-label", "Portfolio Quest");
+arcadeToast.setAttribute("role", "status");
+const revealScreen = document.createElement("div");
+revealScreen.id = "questReveal";
+revealScreen.className = "arcade-screen hidden";
+revealScreen.innerHTML = '<div style="color:#94a3b8">PROJECT UNLOCKED</div><h2 id="questTitle"></h2><p id="questDetail"></p><div class="quest-actions"><a id="questExplore" class="btn btn-ghost">Explore project ↗</a><button id="questContinue" class="btn btn-primary" type="button">Continue</button></div>';
+arcadeCanvas.parentElement.appendChild(revealScreen);
+const pauseScreen = document.createElement("div");
+pauseScreen.className = "arcade-screen hidden";
+pauseScreen.innerHTML = '<h2>Paused</h2><p>Take your time, explorer.</p><button id="questResume" class="btn btn-primary" type="button">Resume</button>';
+arcadeCanvas.parentElement.appendChild(pauseScreen);
+const pauseButton = document.createElement("button");
+pauseButton.id = "questPause";
+pauseButton.type = "button";
+pauseButton.textContent = "Pause";
+arcadeSoundBtn.before(pauseButton);
+const confettiCanvas = document.createElement("canvas");
+confettiCanvas.id = "questConfetti";
+confettiCanvas.width = CW;
+confettiCanvas.height = CH;
+confettiCanvas.setAttribute("aria-hidden", "true");
+arcadeCanvas.parentElement.appendChild(confettiCanvas);
+const celebrationCtx = confettiCanvas.getContext("2d");
 
-// ---------- PIXEL SPRITES (Undertale-ish chibi pixel art, hand-drawn as grids) ----------
 const SPRITES = {
   player: {
     palette: { T: "#5eead4", D: "#08131d" },
@@ -547,21 +591,6 @@ const SPRITES = {
       "..P....P.."
     ]
   },
-  SHIRO: {
-    palette: { Y: "#fde047", W: "#ffffff" },
-    rows: [
-      "....YY....",
-      "....YY....",
-      "...YYYY...",
-      "..YYYYYY..",
-      "YYYYWWYYYY",
-      "YYYYWWYYYY",
-      "..YYYYYY..",
-      "...YYYY...",
-      "....YY....",
-      "..Y....Y.."
-    ]
-  },
   shard: {
     palette: { Y: "#5eead4", W: "#ffffff" },
     rows: [
@@ -593,18 +622,7 @@ function drawPixelSprite(ctx, spriteDef, x, y, totalW, flip) {
   }
 }
 
-// low-res offscreen buffer that gets nearest-neighbor upscaled onto the real
-// canvas — this is what gives the whole scene a chunky, retro pixel-art look
-// instead of smooth vector shapes.
-const PIXEL_SCALE = 2;
-const pixelBuf = document.createElement("canvas");
-pixelBuf.width = CW / PIXEL_SCALE;
-pixelBuf.height = CH / PIXEL_SCALE;
-const pctx = pixelBuf.getContext("2d");
-pctx.imageSmoothingEnabled = false;
-actx.imageSmoothingEnabled = false;
 
-// ---------- SOUND: synthesized SFX + soft looping "cute sci-fi" music (Web Audio, no external files) ----------
 let soundOn = true;
 let audioCtx = null, masterGain = null, musicGain = null, sfxGain = null;
 let musicInterval = null;
@@ -726,324 +744,354 @@ function toggleSound() {
 }
 arcadeSoundBtn.addEventListener("click", toggleSound);
 
-let arcadeState = "closed"; // closed | start | playing | won | over
-let arcadeKeys = {};
-let bosses = [];
-let pickups = [];
-let player = null;
-let camX = 0;
-let lives = 3;
-let bossesDefeated = 0;
-let shardsCollected = 0;
-let arcadeLoopId = null;
-let toastTimer = null;
 
-function freshBosses() {
-  return BOSS_DEFS.map(b => ({
-    ...b, x: b.baseX, dir: 1, hp: b.hp, maxHp: b.hp,
-    y: GROUND_Y - b.size, alive: true, hitFlash: 0, defeated: false
-  }));
-}
 
-function freshPickups() {
-  return FACT_PICKUPS.map(p => ({ ...p, y: GROUND_Y - p.h, collected: false }));
-}
-
-function resetGame() {
-  bosses = freshBosses();
-  pickups = freshPickups();
-  player = { x: 40, y: GROUND_Y - 30, w: 26, h: 30, vx: 0, vy: 0, grounded: false, facing: 1, invincible: 0 };
-  lives = 3;
-  bossesDefeated = 0;
-  shardsCollected = 0;
-  camX = 0;
-  updateHud();
-}
+let arcadeState = "closed", arcadeKeys = {}, bosses = [], pickups = [];
+let player = null, camX = 0, lives = 5, bossesDefeated = 0, shardsCollected = 0;
+let hazards = [], effects = [], confetti = [], toastTimer = null, arcadeLoopId = null;
+let lastTime = 0, accumulator = 0, gameFrame = 0, returnFocus = null, oldOverflow = "";
+let jumpQueued = false, currentReveal = null;
+const STEP = 1000 / 60;
 
 function updateHud() {
-  arcadeLivesEl.textContent = "♥ ".repeat(Math.max(0, lives)).trim() || "—";
-  arcadeBossCountEl.textContent = `bosses: ${bossesDefeated}/${BOSS_DEFS.length}`;
-  arcadeShardCountEl.textContent = `shards: ${shardsCollected}/${FACT_PICKUPS.length}`;
+  document.getElementById("arcadeLives").textContent = "♥ ".repeat(Math.max(0, lives)).trim() || "—";
+  document.getElementById("arcadeBossCount").textContent = `bosses: ${bossesDefeated}/${BOSS_DEFS.length}`;
+  document.getElementById("arcadeShardCount").textContent = `shards: ${shardsCollected}/${FACT_PICKUPS.length}`;
 }
-
-function showToast(msg) {
-  arcadeToast.textContent = msg;
+function resetGame() {
+  bosses = BOSS_DEFS.map(b => ({ ...b, baseX:b.x, y:GROUND_Y-b.size, maxHp:b.hp, alive:true, dir:-1, phase:"idle", timer:100, flash:0, cooldown:0 }));
+  pickups = FACT_PICKUPS.map(p => ({ ...p, y:GROUND_Y-p.h, collected:false }));
+  player = { x:40, y:GROUND_Y-30, w:26, h:30, vx:0, vy:0, grounded:true, facing:1, invincible:0, squash:0 };
+  camX = 0; lives = 5; bossesDefeated = 0; shardsCollected = 0;
+  hazards = []; effects = []; confetti = []; arcadeKeys = {}; jumpQueued = false; currentReveal = null;
+  gameFrame = 0; updateHud();
+}
+function showScreen(which) {
+  [startScreen, winScreen, overScreen, revealScreen, pauseScreen].forEach(s => s.classList.add("hidden"));
+  const screen = {start:startScreen, won:winScreen, over:overScreen, reveal:revealScreen, paused:pauseScreen}[which];
+  arcadeCanvas.parentElement.classList.toggle("quest-menu", Boolean(screen));
+  if (screen) {
+    screen.classList.remove("hidden");
+    screen.querySelector("button")?.focus();
+  }
+  clearTimeout(toastTimer);
+  arcadeToast.classList.add("hidden");
+  pauseButton.disabled = !["playing", "paused"].includes(which);
+}
+function showToast(message) {
+  arcadeToast.textContent = message;
   arcadeToast.classList.remove("hidden");
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => arcadeToast.classList.add("hidden"), 3200);
+  toastTimer = setTimeout(() => arcadeToast.classList.add("hidden"), 3500);
 }
-
-function showScreen(which) {
-  startScreen.classList.add("hidden");
-  winScreen.classList.add("hidden");
-  overScreen.classList.add("hidden");
-  if (which === "start") startScreen.classList.remove("hidden");
-  if (which === "won") winScreen.classList.remove("hidden");
-  if (which === "over") overScreen.classList.remove("hidden");
-  if (which === "won" || which === "over") {
-    clearTimeout(toastTimer);
-    arcadeToast.classList.add("hidden");
-  }
+function burst(x,y,color,count=12) {
+  if (reducedMotion) return;
+  for(let i=0;i<count;i++) effects.push({x,y,vx:(Math.random()-.5)*5,vy:-Math.random()*4,life:28,color});
 }
-
 function openArcade() {
-  arcadeOverlay.classList.remove("hidden");
-  gameModeBtn.classList.add("on");
-  arcadeState = "start";
-  resetGame();
-  showScreen("start");
-  renderArcade();
-  ensureAudio();
-  startMusic();
-  if (!arcadeLoopId) arcadeLoopId = requestAnimationFrame(arcadeTick);
+  if(arcadeState!=="closed") return;
+  returnFocus = document.activeElement;
+  oldOverflow = document.body.style.overflow;
+  document.body.style.overflow = "hidden";
+  arcadeOverlay.classList.remove("hidden"); gameModeBtn.classList.add("on");
+  resetGame(); arcadeState="start"; showScreen("start");
+  ensureAudio(); startMusic(); lastTime=0; accumulator=0;
+  arcadeLoopId=requestAnimationFrame(arcadeTick);
 }
-
 function closeArcade() {
-  arcadeOverlay.classList.add("hidden");
-  gameModeBtn.classList.remove("on");
-  arcadeState = "closed";
-  stopMusic();
-  if (arcadeLoopId) cancelAnimationFrame(arcadeLoopId);
-  arcadeLoopId = null;
+  arcadeState="closed"; arcadeKeys={}; jumpQueued=false;
+  arcadeOverlay.classList.add("hidden"); gameModeBtn.classList.remove("on");
+  clearTimeout(toastTimer); stopMusic(); cancelAnimationFrame(arcadeLoopId); arcadeLoopId=null;
+  document.body.style.overflow=oldOverflow;
+  if(returnFocus?.isConnected) returnFocus.focus();
 }
-
-gameModeBtn.addEventListener("click", () => {
-  if (arcadeOverlay.classList.contains("hidden")) openArcade();
-  else closeArcade();
-});
-arcadeClose.addEventListener("click", closeArcade);
-document.getElementById("arcadeStartBtn").addEventListener("click", () => {
-  resetGame();
-  arcadeState = "playing";
-  showScreen(null);
-});
-document.getElementById("arcadeReplayBtn").addEventListener("click", () => {
-  resetGame();
-  arcadeState = "playing";
-  showScreen(null);
-});
-document.getElementById("arcadeDoneBtn").addEventListener("click", closeArcade);
-document.getElementById("arcadeRetryBtn").addEventListener("click", () => {
-  resetGame();
-  arcadeState = "playing";
-  showScreen(null);
-});
-document.getElementById("arcadeQuitBtn").addEventListener("click", closeArcade);
-
-window.addEventListener("keydown", (e) => {
-  const k = e.key.toLowerCase();
-  arcadeKeys[k] = true;
-  if (arcadeState === "playing" && ["arrowleft", "arrowright", "arrowup", " ", "spacebar"].includes(k)) {
-    e.preventDefault();
-  }
-  if (k === "escape" && arcadeState !== "closed") closeArcade();
-});
-window.addEventListener("keyup", (e) => { arcadeKeys[e.key.toLowerCase()] = false; });
-
-// touch controls
-function bindHold(id, key) {
-  const el = document.getElementById(id);
-  const on = (ev) => { ev.preventDefault(); arcadeKeys[key] = true; };
-  const off = (ev) => { ev.preventDefault(); arcadeKeys[key] = false; };
-  el.addEventListener("touchstart", on, { passive: false });
-  el.addEventListener("touchend", off, { passive: false });
-  el.addEventListener("mousedown", on);
-  el.addEventListener("mouseup", off);
-  el.addEventListener("mouseleave", off);
+function startGame() {
+  resetGame(); pauseButton.textContent="Pause"; arcadeState="playing"; showScreen("playing");
+  ensureAudio(); startMusic(); pauseButton.focus();
 }
-bindHold("btnLeft", "arrowleft");
-bindHold("btnRight", "arrowright");
-bindHold("btnJump", " ");
-
-function updateArcadeGame() {
-  const p = player;
-  const prevBottom = p.y + p.h;
-
-  if (arcadeKeys["arrowleft"] || arcadeKeys["a"]) { p.vx = -MOVE_SPEED; p.facing = -1; }
-  else if (arcadeKeys["arrowright"] || arcadeKeys["d"]) { p.vx = MOVE_SPEED; p.facing = 1; }
-  else p.vx *= 0.78;
-
-  if ((arcadeKeys[" "] || arcadeKeys["spacebar"] || arcadeKeys["arrowup"] || arcadeKeys["w"]) && p.grounded) {
-    p.vy = JUMP_V;
-    p.grounded = false;
-    sfxJump();
+function togglePause() {
+  if(!["playing","paused"].includes(arcadeState)) return;
+  arcadeState=arcadeState==="playing"?"paused":"playing";
+  arcadeKeys={}; jumpQueued=false; pauseButton.textContent=arcadeState==="paused"?"Resume":"Pause";
+  showScreen(arcadeState);
+  if(arcadeState==="paused") stopMusic(); else {startMusic(); pauseButton.focus();}
+}
+function hurtPlayer(direction) {
+  if(player.invincible>0 || arcadeState!=="playing") return;
+  lives--; player.invincible=90; player.vy=-5; player.vx=direction*6;
+  burst(player.x+13,player.y+15,"#fb7185"); sfxHit(); updateHud();
+  if(lives<=0) {
+    arcadeState="over"; stopMusic();
+    document.getElementById("arcadeOverMsg").textContent=`You unlocked ${bossesDefeated}/${BOSS_DEFS.length} projects and collected ${shardsCollected}/${FACT_PICKUPS.length} shards. Ready for another run?`;
+    showScreen("over"); sfxLose();
   }
-
-  p.vy += GRAVITY;
-  p.x += p.vx;
-  p.y += p.vy;
-
-  p.x = Math.max(0, Math.min(LEVEL_WIDTH - p.w, p.x));
-
-  if (p.y + p.h >= GROUND_Y) {
-    p.y = GROUND_Y - p.h;
-    p.vy = 0;
-    p.grounded = true;
+}
+function revealProject(boss) {
+  currentReveal=boss; arcadeState="reveal"; arcadeKeys={}; jumpQueued=false; hazards=[];
+  document.getElementById("questTitle").textContent=boss.title;
+  document.getElementById("questDetail").textContent=boss.detail;
+  const link=document.getElementById("questExplore");
+  link.href=boss.link;
+  if(boss.link.startsWith("#")) {link.removeAttribute("target");link.removeAttribute("rel");}
+  else {link.target="_blank";link.rel="noopener";}
+  document.getElementById("questContinue").textContent=bossesDefeated===BOSS_DEFS.length?"Celebrate!":"Next adventure →";
+  showScreen("reveal"); sfxBossDefeat();
+}
+function winGame() {
+  arcadeState="won"; stopMusic();
+  document.getElementById("arcadeWinMsg").textContent=`All ${BOSS_DEFS.length} projects unlocked! ${shardsCollected===FACT_PICKUPS.length?"Perfect collection! ":""}You found ${shardsCollected}/${FACT_PICKUPS.length} memory shards. Thanks for exploring — graduating Spring 2028, available Summer 2027!`;
+  showScreen("won"); sfxWin();
+  if(!reducedMotion) for(let i=0;i<100;i++) confetti.push({x:Math.random()*CW,y:-Math.random()*CH,vx:(Math.random()-.5)*2,vy:1+Math.random()*2,color:["#5eead4","#fbbf24","#c4b5fd","#fb7185"][i%4],life:300});
+}
+function continueAdventure() {
+  if(bossesDefeated===BOSS_DEFS.length) {winGame();return;}
+  lives=Math.min(5,lives+1); player.invincible=90; arcadeState="playing"; currentReveal=null;
+  showScreen("playing"); updateHud(); pauseButton.focus();
+}
+function overlaps(a,b) {return a.x+a.w>b.x && a.x<b.x+b.w && a.y+a.h>b.y && a.y<b.y+b.h;}
+function fireAttack(b) {
+  b.dir=player.x<b.x?-1:1;
+  if(b.attack==="charge") {b.phase="charge";b.timer=34;}
+  else {
+    b.phase="idle";b.timer=b.attack==="wave"?115:95;
+    const wave=b.attack==="wave";
+    for(const direction of (wave?[-1,1]:[b.dir])) hazards.push({x:b.x+b.size/2,y:wave?GROUND_Y-16:GROUND_Y-42,w:wave?26:38,h:wave?16:25,vx:direction*(wave?3.6:3.1),life:170,kind:wave?"wave":"bubble",color:b.color});
+    burst(b.x+b.size/2,GROUND_Y,b.color);
+  }
+}
+function updateBoss(b) {
+  if(b.flash>0)b.flash--;
+  if(b.cooldown>0)b.cooldown--;
+  if(Math.abs(player.x-b.x)>480) return;
+  b.timer--;
+  if(b.phase==="charge") {
+    b.x+=b.dir*6;
+    if(b.timer<=0 || Math.abs(b.x-b.baseX)>190) {b.phase="idle";b.timer=100;}
+  } else if(b.phase==="warn") {
+    if(b.timer<=0)fireAttack(b);
   } else {
-    p.grounded = false;
+    b.x+=Math.sign(b.baseX-b.x)*.65;
+    if(b.timer<=0) {b.phase="warn";b.timer=45;showToast(b.hint);}
   }
-
-  if (p.invincible > 0) p.invincible--;
-
-  // fact shard pickups
-  pickups.forEach(pk => {
-    if (pk.collected) return;
-    const dx = (p.x + p.w / 2) - pk.x;
-    const dy = (p.y + p.h / 2) - pk.y;
-    if (Math.abs(dx) < 22 && Math.abs(dy) < 24) {
-      pk.collected = true;
-      shardsCollected++;
-      updateHud();
-      showToast(pk.fact);
-      sfxCollect();
-    }
-  });
-
-  bosses.forEach(b => {
-    if (!b.alive) return;
-    b.x += b.speed * b.dir;
-    if (b.x > b.baseX + b.range) { b.x = b.baseX + b.range; b.dir = -1; }
-    if (b.x < b.baseX - b.range) { b.x = b.baseX - b.range; b.dir = 1; }
-    if (b.hitFlash > 0) b.hitFlash--;
-
-    const overlapX = p.x + p.w > b.x && p.x < b.x + b.size;
-    const overlapY = p.y + p.h > b.y && p.y < b.y + b.size;
-    if (overlapX && overlapY) {
-      const wasAbove = prevBottom <= b.y + 12;
-      if (p.vy > 0 && wasAbove) {
-        // stomp!
-        b.hp--;
-        b.hitFlash = 10;
-        p.vy = JUMP_V * 0.55;
-        sfxStomp();
-        if (b.hp <= 0) {
-          b.alive = false;
-          b.defeated = true;
-          bossesDefeated++;
-          updateHud();
-          showToast(b.fact);
-          sfxBossDefeat();
-          if (bossesDefeated >= BOSS_DEFS.length) {
-            arcadeState = "won";
-            winMsgEl.textContent = `all four bosses defeated — you also found ${shardsCollected}/${FACT_PICKUPS.length} memory shards. thanks for playing through my portfolio.`;
-            showScreen("won");
-            sfxWin();
-          }
-        }
-      } else if (p.invincible <= 0) {
-        lives--;
-        p.invincible = 80;
-        p.vx = p.x < b.x ? -6 : 6;
-        p.vy = -6;
-        updateHud();
-        sfxHit();
-        if (lives <= 0) {
-          arcadeState = "over";
-          overMsg.textContent = `the bosses got you — you defeated ${bossesDefeated}/${BOSS_DEFS.length} and found ${shardsCollected}/${FACT_PICKUPS.length} memory shards before going down.`;
-          showScreen("over");
-          sfxLose();
-        }
-      }
-    }
-  });
-
-  camX = Math.max(0, Math.min(LEVEL_WIDTH - CW, p.x + p.w / 2 - CW / 2));
 }
-
-const SKY_BANDS = ["#080f18", "#0a1622", "#0d1c2c", "#0f2334"];
+function updateArcadeGame() {
+  gameFrame++;
+  const p=player, prevBottom=p.y+p.h;
+  if(arcadeKeys.arrowleft||arcadeKeys.a){p.vx=-MOVE_SPEED;p.facing=-1;}
+  else if(arcadeKeys.arrowright||arcadeKeys.d){p.vx=MOVE_SPEED;p.facing=1;}
+  else p.vx*=.78;
+  if(jumpQueued&&p.grounded){p.vy=JUMP_V;p.grounded=false;sfxJump();burst(p.x+13,GROUND_Y,"#5eead4",6);}
+  jumpQueued=false;
+  p.vy+=GRAVITY; p.x+=p.vx; p.y+=p.vy;
+  // Defeat each boss before entering the next stretch.
+  const active=bosses.find(b=>b.alive);
+  p.x=Math.max(0,Math.min(active?active.baseX+160:LEVEL_WIDTH-p.w,p.x));
+  if(p.y+p.h>=GROUND_Y){if(!p.grounded)p.squash=7;p.y=GROUND_Y-p.h;p.vy=0;p.grounded=true;}
+  else p.grounded=false;
+  if(p.invincible>0)p.invincible--;
+  if(p.squash>0)p.squash--;
+  for(const pk of pickups){
+    if(!pk.collected&&Math.abs(p.x+p.w/2-pk.x)<24&&Math.abs(p.y+p.h/2-pk.y)<26){
+      pk.collected=true;shardsCollected++;updateHud();showToast(pk.fact);sfxCollect();burst(pk.x,pk.y,"#fbbf24");
+    }
+  }
+  if(active){
+    updateBoss(active);
+    const hitbox={x:active.x,y:active.y,w:active.size,h:active.size};
+    if(overlaps(p,hitbox)){
+      if(p.vy>0&&prevBottom<=active.y+12){
+        p.vy=JUMP_V*.72;
+        if(active.cooldown===0){
+          active.hp--;active.cooldown=20;active.flash=10;sfxStomp();burst(active.x+active.size/2,active.y,active.color,18);
+          if(active.hp<=0){active.alive=false;bossesDefeated++;updateHud();revealProject(active);}
+        }
+      }else hurtPlayer(p.x<active.x?-1:1);
+    }
+  }
+  if(arcadeState==="playing")for(const h of hazards){
+    h.x+=h.vx;h.life--;
+    if(h.life>0&&overlaps(p,h)){hurtPlayer(Math.sign(h.vx));h.life=0;}
+  }
+  hazards=hazards.filter(h=>h.life>0&&h.x>0&&h.x<LEVEL_WIDTH);
+  camX=Math.max(0,Math.min(LEVEL_WIDTH-CW,p.x+p.w/2-CW/2));
+}
+function drawSprite(sprite,x,y,width,flip=false){drawPixelSprite(actx,SPRITES[sprite],x,y,width,flip);}
+// Each project has its own setting; scenery is decorative, not an obstacle.
+function drawQuestScenery() {
+  const zone = player ? (player.x < 1100 ? "city" : player.x < 1900 ? "moon" : "stage") : "city";
+  const palettes = {
+    city: ["#0a1420", "#152431", "#20313a", "#293b43"],
+    moon: ["#080d20", "#10152e", "#1c2340", "#30334c"],
+    stage: ["#100b24", "#211237", "#301846", "#432250"]
+  };
+  palettes[zone].forEach((color, i) => {
+    actx.fillStyle = color;
+    actx.fillRect(0, i * GROUND_Y / 4, CW, GROUND_Y / 4 + 1);
+  });
+  actx.fillStyle = "#94a3b8";
+  for (let i = 0; i < 65; i++) {
+    const x = ((i * 137 - camX * .12) % CW + CW) % CW;
+    actx.fillRect(x, 30 + (i * 67) % 160, i % 9 === 0 ? 3 : 2, 2);
+  }
+  if (zone === "city") {
+    // Broken skyline, dark windows, and a distant rescue beacon.
+    for (let i = -1; i < 12; i++) {
+      const x = i * 95 - (camX * .2 % 95);
+      const h = 65 + ((i + 13) * 37 % 105);
+      actx.fillStyle = "#14242e";
+      actx.fillRect(x, GROUND_Y - h, 72, h);
+      actx.fillStyle = "#243b43";
+      actx.fillRect(x + 9, GROUND_Y - h - 13, 28, 13);
+      for (let row = 0; row < 4; row++) for (let col = 0; col < 3; col++) {
+        actx.fillStyle = (i + row + col) % 4 === 0 ? "#a38b58" : "#304850";
+        actx.fillRect(x + 10 + col * 19, GROUND_Y - h + 16 + row * 24, 8, 10);
+      }
+      // A jagged missing corner rather than a solid rectangular roof.
+      actx.fillStyle = "#20313a";
+      actx.fillRect(x + 48, GROUND_Y - h, 24, 17);
+    }
+    actx.fillStyle = "rgba(94,234,212,.1)";
+    actx.beginPath();actx.moveTo(620,GROUND_Y);actx.lineTo(565,90);actx.lineTo(675,90);actx.fill();
+    actx.fillStyle = "#344b50";
+    for(let i=0;i<16;i++) {
+      const x=((i*73-camX*.55)%CW+CW)%CW;
+      actx.fillRect(x,GROUND_Y-8-(i%3)*4,25+(i%4)*5,16);
+    }
+  } else if (zone === "moon") {
+    // Earth over the lunar horizon.
+    actx.fillStyle="#3679b1";actx.beginPath();actx.arc(640,87,39,0,Math.PI*2);actx.fill();
+    actx.save();actx.beginPath();actx.arc(640,87,39,0,Math.PI*2);actx.clip();
+    actx.fillStyle="#62b6a2";actx.fillRect(610,57,28,14);actx.fillRect(624,69,23,19);actx.fillRect(642,97,24,23);
+    actx.fillStyle="rgba(230,245,255,.6)";actx.fillRect(607,77,69,5);actx.fillRect(613,101,31,4);actx.restore();
+    for(let i=-1;i<8;i++) {
+      const x=i*150-(camX*.18%150);
+      actx.fillStyle=i%2===0?"#42435b":"#34384f";
+      actx.beginPath();actx.moveTo(x,GROUND_Y);actx.lineTo(x+65,225+(i%3)*16);actx.lineTo(x+155,GROUND_Y);actx.fill();
+    }
+    // Small lander in the distance.
+    actx.fillStyle="#b3b9c8";actx.fillRect(130,278,34,22);
+    actx.fillStyle="#c7a66a";actx.fillRect(136,263,22,15);
+    actx.strokeStyle="#b3b9c8";actx.lineWidth=3;
+    actx.beginPath();actx.moveTo(135,300);actx.lineTo(122,320);actx.moveTo(160,300);actx.lineTo(174,320);actx.stroke();
+  } else {
+    // Neon stage, stationary spotlights, and microphone silhouettes.
+    actx.fillStyle="#24102f";actx.fillRect(0,45,55,GROUND_Y-45);actx.fillRect(CW-55,45,55,GROUND_Y-45);
+    for(const x of [150,650]) {
+      actx.fillStyle="rgba(196,181,253,.09)";
+      actx.beginPath();actx.moveTo(x,45);actx.lineTo(x-130,GROUND_Y);actx.lineTo(x+130,GROUND_Y);actx.fill();
+      actx.fillStyle="#c4b5fd";actx.fillRect(x-13,35,26,9);
+    }
+    actx.strokeStyle="#9e65cf";actx.lineWidth=2;actx.strokeRect(285,78,230,69);
+    actx.fillStyle="#e9d5ff";actx.textAlign="center";actx.font="bold 18px monospace";actx.fillText("IDEAS TAKE THE STAGE",400,108);
+    actx.font="11px monospace";actx.fillStyle="#94a3b8";actx.fillText("REBUTTAL.AI",400,129);
+    for(const x of [95,695]) {
+      actx.fillStyle="#ad93b9";actx.fillRect(x,248,4,72);actx.fillRect(x-13,319,30,4);
+      actx.fillStyle="#d8c4e4";actx.fillRect(x-5,227,14,24);
+    }
+    for(const [x,y] of [[215,180],[530,195]]) {
+      actx.strokeStyle="#835d9b";actx.strokeRect(x,y,52,27);
+      actx.beginPath();actx.moveTo(x+10,y+27);actx.lineTo(x+10,y+35);actx.lineTo(x+20,y+27);actx.stroke();
+      actx.fillStyle="#835d9b";for(let i=0;i<3;i++)actx.fillRect(x+12+i*11,y+12,3,3);
+    }
+  }
+  actx.fillStyle=zone==="moon"?"#55576b":zone==="stage"?"#271734":"#23383e";
+  actx.fillRect(0,GROUND_Y,CW,CH-GROUND_Y);
+  actx.fillStyle=zone==="moon"?"#aaaec5":zone==="stage"?"#c084fc":"#5eead4";
+  actx.fillRect(0,GROUND_Y,CW,3);
+  if(zone==="moon") {
+    for(let i=0;i<10;i++) {
+      const x=((i*99-camX*.8)%CW+CW)%CW;
+      actx.fillStyle="#363c51";actx.beginPath();actx.ellipse(x,GROUND_Y+20+(i%3)*12,18,5,0,0,Math.PI*2);actx.fill();
+    }
+  } else {
+    actx.strokeStyle=zone==="stage"?"#573266":"#355057";actx.lineWidth=1;
+    for(let x=-(camX%60);x<CW;x+=60){actx.beginPath();actx.moveTo(x,GROUND_Y+4);actx.lineTo(x-30,CH);actx.stroke();}
+  }
+  const label={city:"01 / A.U.R.A. · RESCUE DISTRICT",moon:"02 / DRILL KING · LUNAR OUTPOST",stage:"03 / REBUTTAL.AI · IDEA STAGE"}[zone];
+  actx.fillStyle="rgba(8,15,24,.8)";actx.fillRect(14,12,335,27);
+  actx.fillStyle="#d6e3ef";actx.textAlign="left";actx.font="12px monospace";actx.fillText(label,24,30);
+}
 
 function renderArcade() {
-  pctx.setTransform(1, 0, 0, 1, 0, 0);
-  pctx.clearRect(0, 0, pixelBuf.width, pixelBuf.height);
-  pctx.scale(1 / PIXEL_SCALE, 1 / PIXEL_SCALE);
-
-  // banded retro sky (flat color steps instead of a smooth gradient)
-  const bandH = CH / SKY_BANDS.length;
-  SKY_BANDS.forEach((color, i) => {
-    pctx.fillStyle = color;
-    pctx.fillRect(0, i * bandH, CW, bandH + 1);
-  });
-
-  // parallax stars as little pixel dots
-  pctx.fillStyle = "rgba(148,163,184,0.65)";
-  bgStars.forEach(s => {
-    const sx = s.x - camX * 0.4;
-    if (sx < -10 || sx > CW + 10) return;
-    pctx.fillRect(sx - 1, s.y - 1, 2, 2);
-  });
-
-  // ground + scrolling tick texture
-  pctx.fillStyle = "#132a3d";
-  pctx.fillRect(0, GROUND_Y, CW, CH - GROUND_Y);
-  pctx.fillStyle = "#5eead4";
-  pctx.fillRect(0, GROUND_Y, CW, 3);
-  pctx.fillStyle = "rgba(94,234,212,0.15)";
-  for (let gx = -(camX % 40); gx < CW; gx += 40) {
-    pctx.fillRect(gx, GROUND_Y + 4, 2, CH - GROUND_Y - 4);
+  actx.imageSmoothingEnabled=false;
+  drawQuestScenery();
+  for(const pk of pickups){if(pk.collected)continue;const bob=reducedMotion?0:Math.sin(gameFrame/15+pk.x)*3;drawSprite("shard",pk.x-camX-9,pk.y-9+bob,18);}
+  for(const b of bosses){
+    if(!b.alive)continue;
+    const x=b.x-camX;
+    if(x<-100||x>CW+100)continue;
+    actx.save();actx.globalAlpha=b.flash>0?.5:1;drawSprite(b.sprite,x,b.y,b.size,b.dir<0);actx.restore();
+    actx.fillStyle="#334155";actx.fillRect(x,b.y-13,b.size,5);actx.fillStyle=b.color;actx.fillRect(x,b.y-13,b.size*b.hp/b.maxHp,5);
+    actx.font="11px monospace";actx.textAlign="center";actx.fillStyle="#e2e8f0";actx.fillText(b.name,Math.max(65,Math.min(CW-65,x+b.size/2)),b.y-22);
+    if(b.phase==="warn"){actx.fillStyle="#fbbf24";actx.font="bold 24px monospace";actx.fillText("!",x+b.size/2,b.y-42);}
   }
-
-  if (player) {
-    // fact shard pickups
-    pickups.forEach(pk => {
-      if (pk.collected) return;
-      const sx = pk.x - camX;
-      if (sx < -20 || sx > CW + 20) return;
-      const bob = Math.sin(Date.now() / 260 + pk.x) * 4;
-      drawPixelSprite(pctx, SPRITES.shard, sx - 9, pk.y - 9 + bob, 18, false);
-    });
-
-    // bosses
-    bosses.forEach(b => {
-      if (!b.alive) return;
-      const sx = b.x - camX;
-      if (sx < -80 || sx > CW + 80) return;
-      const wobble = Math.sin(Date.now() / 220 + b.baseX) * 3;
-      pctx.save();
-      pctx.globalAlpha = b.hitFlash > 0 ? 0.4 : 1;
-      drawPixelSprite(pctx, SPRITES[b.sprite], sx, b.y + wobble, b.size, b.dir < 0);
-      pctx.restore();
-
-      // hp bar
-      const barW = b.size;
-      pctx.fillStyle = "rgba(0,0,0,0.4)";
-      pctx.fillRect(sx, b.y - 12, barW, 5);
-      pctx.fillStyle = "#5eead4";
-      pctx.fillRect(sx, b.y - 12, barW * (b.hp / b.maxHp), 5);
-    });
-
-    // player
-    const px = player.x - camX;
-    pctx.save();
-    if (player.invincible > 0 && Math.floor(player.invincible / 6) % 2 === 0) {
-      pctx.globalAlpha = 0.35;
+  for(const h of hazards){
+    const x=h.x-camX;actx.fillStyle=h.color;
+    if(h.kind==="wave"){
+      actx.beginPath();actx.moveTo(x,h.y+h.h);actx.lineTo(x+h.w/2,h.y);actx.lineTo(x+h.w,h.y+h.h);actx.fill();
+    }else{
+      actx.fillRect(x,h.y,h.w,h.h-5);actx.fillRect(x+6,h.y+h.h-5,6,5);
+      actx.fillStyle="#08131d";actx.font="bold 12px monospace";actx.textAlign="center";actx.fillText("...",x+h.w/2,h.y+14);
     }
-    drawPixelSprite(pctx, SPRITES.player, px, player.y, player.w, player.facing < 0);
-    pctx.restore();
   }
-
-  // blit the low-res buffer onto the real canvas, upscaled with nearest-neighbor
-  // for that chunky pixel-art look
-  actx.clearRect(0, 0, CW, CH);
-  actx.drawImage(pixelBuf, 0, 0, CW, CH);
-
-  // crisp boss name labels drawn at full resolution on top, for legibility
-  if (player) {
-    bosses.forEach(b => {
-      if (!b.alive) return;
-      const sx = b.x - camX;
-      if (sx < -80 || sx > CW + 80) return;
-      actx.fillStyle = "#93a1b7";
-      actx.font = "11px monospace";
-      actx.textAlign = "center";
-      const labelHalfW = actx.measureText(b.name).width / 2 + 4;
-      const labelX = Math.min(CW - labelHalfW, Math.max(labelHalfW, sx + b.size / 2));
-      actx.fillText(b.name, labelX, b.y - 18);
-    });
+  if(player){
+    const p=player,scaleY=reducedMotion?1:!p.grounded?1.12:p.squash>0?.82:1;
+    actx.save();actx.translate(p.x-camX+p.w/2,p.y+p.h);actx.scale(1/scaleY,scaleY);
+    actx.globalAlpha=p.invincible>0?.65:1;
+    drawSprite("player",-p.w/2,-p.h,p.w,p.facing<0);actx.restore();
   }
+  for(const e of effects){actx.fillStyle=e.color;actx.globalAlpha=e.life/28;actx.fillRect(e.x-camX,e.y,4,4);}actx.globalAlpha=1;
+  celebrationCtx.clearRect(0,0,CW,CH);
+  for(const c of confetti){celebrationCtx.fillStyle=c.color;celebrationCtx.fillRect(c.x,c.y,6,9);}
 }
-
-function arcadeTick() {
-  if (arcadeState === "playing") updateArcadeGame();
-  renderArcade();
-  arcadeLoopId = requestAnimationFrame(arcadeTick);
+function updateEffects(){
+  effects.forEach(e=>{e.x+=e.vx;e.y+=e.vy;e.vy+=.15;e.life--;});effects=effects.filter(e=>e.life>0);
+  confetti.forEach(c=>{c.x+=c.vx;c.y+=c.vy;c.life--;});confetti=confetti.filter(c=>c.life>0&&c.y<CH+10);
 }
+function arcadeTick(time) {
+  if(arcadeState==="closed")return;
+  if(!lastTime)lastTime=time;
+  accumulator+=Math.min(time-lastTime,80);lastTime=time;
+  while(accumulator>=STEP){if(arcadeState==="playing")updateArcadeGame();if(arcadeState!=="paused")updateEffects();accumulator-=STEP;}
+  renderArcade();arcadeLoopId=requestAnimationFrame(arcadeTick);
+}
+function bindHold(id,key){
+  const button=document.getElementById(id);
+  button.addEventListener("pointerdown",e=>{if(arcadeState!=="playing")return;e.preventDefault();button.setPointerCapture(e.pointerId);arcadeKeys[key]=true;if(key===" ")jumpQueued=true;});
+  ["pointerup","pointercancel","lostpointercapture"].forEach(event=>button.addEventListener(event,()=>{arcadeKeys[key]=false;}));
+}
+bindHold("btnLeft","arrowleft");bindHold("btnRight","arrowright");bindHold("btnJump"," ");
+gameModeBtn.addEventListener("click",()=>arcadeState==="closed"?openArcade():closeArcade());
+["arcadeClose","arcadeDoneBtn","arcadeQuitBtn"].forEach(id=>document.getElementById(id).addEventListener("click",closeArcade));
+["arcadeStartBtn","arcadeReplayBtn","arcadeRetryBtn"].forEach(id=>document.getElementById(id).addEventListener("click",startGame));
+pauseButton.addEventListener("click",togglePause);document.getElementById("questResume").addEventListener("click",togglePause);
+document.getElementById("questContinue").addEventListener("click",continueAdventure);
+document.getElementById("questExplore").addEventListener("click", () => {
+  if (currentReveal?.link.startsWith("#")) {
+    if (currentReveal.sprite === "REBUTTAL") {
+      goTo(projects.findIndex(project => project.name === "Rebuttal.ai"));
+    }
+    closeArcade();
+  }
+});
+window.addEventListener("keydown",e=>{
+  if(arcadeState==="closed")return;
+  const key=e.key.toLowerCase();
+  if(key==="escape"){e.preventDefault();closeArcade();return;}
+  if(key==="p"&&!e.repeat){e.preventDefault();togglePause();return;}
+  if(key==="tab"){
+    const controls=[...arcadeOverlay.querySelectorAll("button,a[href]")].filter(el=>!el.disabled&&el.getClientRects().length);
+    const first=controls[0],last=controls[controls.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last?.focus();}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first?.focus();}
+  }
+  if(arcadeState!=="playing")return;
+  if(["arrowleft","arrowright","arrowup"," ","a","d","w"].includes(key)){
+    e.preventDefault();arcadeKeys[key]=true;
+    if([" ","arrowup","w"].includes(key)&&!e.repeat)jumpQueued=true;
+  }
+});
+window.addEventListener("keyup",e=>{arcadeKeys[e.key.toLowerCase()]=false;});
+window.addEventListener("blur",()=>{arcadeKeys={};jumpQueued=false;if(arcadeState==="playing")togglePause();});
+document.addEventListener("visibilitychange",()=>{if(document.hidden&&arcadeState==="playing")togglePause();});
+updateHud();
